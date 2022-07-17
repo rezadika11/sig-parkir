@@ -8,9 +8,10 @@
       </div>
       <ul class="sidebar-menu">
           <li class="menu-header">Pages</li>
-          <li class="active"><a class="nav-link" href="blank.html"><i class="far fa-square"></i> <span>Dashboard</span></a></li>
-          <li><a class="nav-link" href="blank.html"><i class="far fa-square"></i> <span>Lokasi</span></a></li>
-          <li><a class="nav-link" href="blank.html"><i class="far fa-square"></i> <span>Settings</span></a></li>
+          <li class="active"><a class="nav-link" href="{{ route('dashboard') }}"><i class="fas fa-tachometer-alt"></i> <span>Dashboard</span></a></li>
+          <li><a class="nav-link" href="{{ route('lokasi.lokasiview') }}"><i class="fas fa-street-view"></i> <span>Lokasi</span></a></li>
+          <li><a class="nav-link" href="{{ route('kecamatan.kecamatanview') }}""><i class="fas fa-table"></i> <span>Kecamatan</span></a></li>
+          <li><a class="nav-link" href="{{ route('desa.desaview') }}"><i class="fas fa-table"></i> <span>Desa</span></a></li>
          
          
     </aside>

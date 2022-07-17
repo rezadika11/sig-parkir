@@ -10,13 +10,18 @@ use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('IsLogin');
+    }
+    
     public function Profil(){
         return view('admin.profil');
     }
 
     public function EditProfil(){
 
-        $data = User::find(4)->first();
+        $data = User::findOrFail(1)->first();
         return view('admin.editprofil', compact('data'));
     }
     public function PostEditProfil(Request $request){
@@ -28,7 +33,7 @@ class AdminController extends Controller
         ]);
 
         $data = DB::table('users')
-                    ->where('id',4)
+                    ->where('id',1)
                     ->update([
                         'name' => $request->name,
                         'username' => $request->username,
