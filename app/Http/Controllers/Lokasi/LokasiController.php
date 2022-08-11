@@ -14,16 +14,106 @@ class LokasiController extends Controller
     }
 
     public function LokasiView(){
-
-        return view('lokasi.index');
+        $dataLokasi = DB::table('lokasi')
+            ->join('desa','desa.id_desa','lokasi.id_desa')
+            ->join('kecamatan','kecamatan.id_kecamatan','lokasi.id_kecamatan')
+            ->select('nama_lokasi','juru_parkir','jalan','foto','latitude','longitude','nama_kecamatan','nama_desa','id_lokasi')
+            ->orderBy('juru_parkir','asc')
+            ->get();
+        
+        return view('lokasi.index', compact('dataLokasi'));
     }
 
     public function TambahLokasi(){
         $kecamatan = DB::table('kecamatan')
                 ->select('id_kecamatan','nama_kecamatan')
+                ->orderBy('nama_kecamatan','asc')
                 ->get();
                 
         return view('lokasi.tambahlokasi', compact('kecamatan'));
+    }
+
+    public function GetDesa($id){
+        $desa = DB::table('desa') 
+            ->where('id_kecamatan',$id)  
+            ->pluck('nama_desa','id_desa');
+    
+        return json_encode($desa);
+    }
+
+    public function SimpanLokasi(Request $request){
+        // return $request->file('foto')->store('foto-lokasi');
+        
+        $validateData = $request->validate([
+            'nama_lokasi' => 'required|max:255',
+            'juru_parkir' => 'required|max:255',
+            'kecamatan' => 'required|max:255',
+            'desa' => 'required|max:255',
+            'jalan' => 'required|max:255',
+            'latitude' => 'required|max:255',
+            'longitude' => 'required|max:255',
+            'photo' => 'required|file|mimes:png,jpg,jpeg|max:2048',
+        ]);
+
+        DB::BeginTransaction();
+        try {
+            $request->merge([
+                'id_kecamatan' => $request->input('kecamatan'),
+                'id_desa' => $request->input('desa'),
+                'foto' => $request->file('photo')->store('foto-lokasi')
+            ]);
+
+
+            $dataLokasi = DB::table('lokasi')
+                    ->insert($request->only('nama_lokasi','juru_parkir','id_kecamatan','id_desa','jalan','latitude','longitude','foto'));
+
+        DB::commit();
+            return redirect(route('lokasi.lokasiview'))
+                ->with('suksesTambah','Data lokasi berhasil ditambahkan');
+        }catch(\Exception $e){
+            DB::rollBack();
+            report($e);
+            return redirect(url()->previous())
+                ->withInput()
+                ->with('gagalTambah','Terjadi Kesalahan');
+        }
+        
+    }
+
+    public function EditLokasi(Request $request, $id_lokasi){
+
+        $data = DB::table('lokasi')
+            ->join('desa','desa.id_desa','lokasi.id_desa')
+            ->join('kecamatan','kecamatan.id_kecamatan','lokasi.id_kecamatan')
+            ->where('id_lokasi', $id_lokasi)
+            ->select('nama_lokasi','juru_parkir','jalan','foto','latitude','longitude','nama_kecamatan','nama_desa','id_lokasi')
+            ->first();
+
+        $kecamatan = DB::table('kecamatan')
+            ->select('id_kecamatan','nama_kecamatan')
+            ->orderBy('nama_kecamatan','asc')
+            ->get();
+            
+
+            return view('lokasi.editlokasi', compact('data','kecamatan'));
+    }
+
+    public function HapusLokasi($id_lokasi){
+        DB::BeginTransaction();
+        try {
+            DB::table('lokasi')
+                ->where('id_lokasi', $id_lokasi)
+                ->delete();
+            DB::commit();
+            return redirect(route('lokasi.lokasiview'))
+                ->with('suksesHapus', 'Data Lokasi berhasil di hapus');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            report($e);
+            return redirect(url()->previous())
+                ->withInput()
+                ->with('gagalTambah','Terjadi Kesalahan');
+        }
     }
     
 }

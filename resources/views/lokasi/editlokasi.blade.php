@@ -13,7 +13,7 @@
 <!--select2-->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css">
 @endsection
-@section('title','Tambah Desa')
+@section('title','Edit Desa')
 @section('content')
 
 <div class="main-content" style="min-height: 531px;">
@@ -40,7 +40,7 @@
                         </button>
                     </div>
                     @endif
-                    <form action="{{ route('lokasi.simpanlokasi') }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('lokasi.updatelokasi') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="row">
                             <div class="col-md-6">
@@ -48,7 +48,7 @@
                                     <label>Nama Lokasi</label>
                                     <input type="text"
                                         class="form-control mb-3 @error('nama_lokasi') is-invalid @enderror"
-                                        name="nama_lokasi" value="{{ old('nama_lokasi') }}">
+                                        name="nama_lokasi" value="{{ old('nama_lokasi', $data->nama_lokasi) }}">
                                     @error('nama_lokasi')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -59,7 +59,7 @@
                                     <label>Juru Parkir</label>
                                     <input type="text"
                                         class="form-control mb-3 @error('juru_parkir') is-invalid @enderror"
-                                        name="juru_parkir" value="{{ old('juru_parkir') }}">
+                                        name="juru_parkir" value="{{ old('juru_parkir', $data->juru_parkir) }}">
                                     @error('juru_parkir')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -68,38 +68,41 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="kecamatan">Kecamatan</label>
-                                    <select class="form-control select2 @error('kecamatan') is-invalid @enderror" name="kecamatan"  id="kecamatan">
+                                    <select class="form-control select2 @error('kecamatan') is-invalid @enderror"
+                                        name="kecamatan" id="kecamatan">
                                         <option selected disabled>-Pilih Kecamatan-</option>
-                                        @foreach ($kecamatan as $kec)
-                                            <option value="{{ $kec->id_kecamatan }}" {{ old('kecamatan') == $kec->id_kecamatan ? 'selected' : '' }}>
-                                                {{ $kec->nama_kecamatan }}
-                                            </option>
+                                        @foreach($kecamatan as $kec)
+                                        @if (old('kecamatan') == $kec->id_kecamatan)
+                                        <option value="{{ $kec->id_kecamatan }}" selected>{{$kec->id_kecamatan }}</option>
+                                        @else
+                                        <option value="{{ $kec->id_kecamatan }}">{{ $kec->nama_kecamatan }}</option>
+                                        @endif
                                         @endforeach
                                     </select>
                                     @error('kecamatan')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
-                                        @enderror
-                                </div>
-                                    <div class="form-group">
-                                        <label for="desa">Desa</label>
-                                        <select class="form-control select2 mb-3 @error('kecamatan') is-invalid @enderror" name="desa" id="desa">
-                                            <option selected disabled>-Pilih Desa-</option>
-                                        </select>
-                                        @error('desa')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
-                                        @enderror
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
                                     </div>
+                                    @enderror
                                 </div>
+                                <div class="form-group">
+                                    <label for="desa">Desa</label>
+                                    <select class="form-control select2 mb-3 @error('kecamatan') is-invalid @enderror"
+                                        name="desa" id="desa">
+                                        <option selected disabled>-Pilih Desa-</option>
+                                    </select>
+                                    @error('desa')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
+                                </div>
+                            </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Jalan</label>
-                                    <input type="text"
-                                        class="form-control mb-3 @error('jalan') is-invalid @enderror"
-                                        name="jalan" value="{{ old('jalan') }}">
+                                    <input type="text" class="form-control mb-3 @error('jalan') is-invalid @enderror"
+                                        name="jalan" value="{{ old('jalan', $data->jalan) }}">
                                     @error('jalan')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -108,9 +111,8 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Latitude</label>
-                                    <input type="text"
-                                        class="form-control mb-3 @error('latitude') is-invalid @enderror"
-                                        name="latitude" value="{{ old('latitude') }}">
+                                    <input type="text" class="form-control mb-3 @error('latitude') is-invalid @enderror"
+                                        name="latitude" value="{{ old('latitude', $data->latitude) }}">
                                     @error('latitude')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -121,25 +123,25 @@
                                     <label>Longitude</label>
                                     <input type="text"
                                         class="form-control mb-3 @error('longitude') is-invalid @enderror"
-                                        name="longitude" value="{{ old('longitude') }}">
+                                        name="longitude" value="{{ old('longitude', $data->longitude) }}">
                                     @error('longitude')
                                     <div class="invalid-feedback">
                                         {{ $message }}
                                     </div>
                                     @enderror
                                 </div>
-                                   <div class="form-group">
+                                <div class="form-group">
                                     <label>Foto</label>
-                                    <input type="file"
-                                        class="form-control mb-3 @error('photo') is-invalid @enderror"
-                                        name="photo" value="{{ old('photo') }}">
+                                    <input type="file" class="form-control mb-3 @error('photo') is-invalid @enderror"
+                                        name="photo" value="{{ old('photo', $data->foto) }}">
                                     @error('photo')
                                     <div class="invalid-feedback">
                                         {{ $message }}
                                     </div>
                                     @enderror
                                 </div>
-                                <button type="submit" class="btn btn-primary float-right"><i class="fas fa-save"></i> Tambah</button>
+                                <button type="submit" class="btn btn-primary float-right"><i class="fas fa-save"></i>
+                                    Tambah</button>
                             </div>
                         </div>
                     </form>
@@ -151,7 +153,8 @@
 @endsection
 @push('javascript')
 <!-- General JS Scripts -->
-<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+    crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
     integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
 </script>

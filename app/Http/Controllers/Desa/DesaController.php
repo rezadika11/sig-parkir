@@ -24,6 +24,7 @@ class DesaController extends Controller
     public function TambahDesa(){
         $kecamatan = DB::table('kecamatan')
                 ->select('id_kecamatan','nama_kecamatan')
+                ->orderBy('nama_kecamatan','asc')
                 ->get();
 
         return view('desa.tambahdesa', compact('kecamatan'));

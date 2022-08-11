@@ -1,6 +1,6 @@
 "use strict";
 
-var statistics_chart = document.getElementById("myChart").getContext('2d');
+// var statistics_chart = document.getElementById("myChart").getContext('2d');
 
 var myChart = new Chart(statistics_chart, {
   type: 'line',

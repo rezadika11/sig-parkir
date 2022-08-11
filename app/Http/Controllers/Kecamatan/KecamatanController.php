@@ -15,6 +15,7 @@ class KecamatanController extends Controller
     public function KecamatanView(){
         $data = DB::table('kecamatan')
             ->select('id_kecamatan','nama_kecamatan')
+            ->orderBy('nama_kecamatan','asc')
             ->get();
 
         return view('kecamatan.index', compact('data'));
