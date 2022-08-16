@@ -21,10 +21,12 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/dashboard', [DashboardController::class, 'Dashboard'])->name('dashboard');
-Route::get('/dashboard/cari', [DashboardController::class, 'FilterData'])->name('filterdata');
+Route::post('/getlocationdashboard', [DashboardController::class, 'getLocationDashboard']);
 Route::get('/ajaxKecamatan', [DashboardController::class, 'AjaxKecamatan'])->name('ajaxKecamatan');
 Route::get('/getajaxdesa/{id}', [DashboardController::class, 'getAjaxDesa'])->name('getajaxdesa');
 Route::get('/', [DashboardUserController::class, 'Home'])->name('home');
+Route::post('/getlocation', [DashboardUserController::class, 'getLocation']);
+Route::get('/getajaxuserdesa/{id}', [DashboardUserController::class, 'getAjaxDesa'])->name('getajaxuserdesa');
 Route::get('/login', [LoginController::class, 'LoginView'])->name('login');
 Route::post('/loginauth', [LoginController::class, 'LoginAuth'])->name('loginauth');
 
@@ -42,7 +44,7 @@ Route::controller(LokasiController::class)->prefix('lokasi')->name('lokasi.')->g
     Route::post('/simpanlokasi', 'SimpanLokasi')->name('simpanlokasi');
     Route::get('/getdesa/ajax/{id}', 'GetDesa')->name('getDesa');
     Route::get('/editlokasi/{id_lokasi}', 'EditLokasi')->name('editlokasi');
-    Route::post('/updatelokasi', 'UpdateLokasi')->name('updatelokasi');
+    Route::post('/updatelokasi{id_lokasi}', 'UpdateLokasi')->name('updatelokasi');
     Route::post('/hapuslokasi/{id_lokasi}', 'HapusLokasi')->name('hapuslokasi');
 });
 

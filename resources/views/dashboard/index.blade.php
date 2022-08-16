@@ -91,7 +91,6 @@
         </div>
         <div class="card">
             <div class="card-body">
-              <form action="{{ route('filterdata') }}" method="GET">
                 <div class="row">
                     <div class="col-md-4">
                         <div class="form-group">
@@ -125,19 +124,13 @@
                             @enderror
                         </div>
                     </div>
-                    {{-- <div class="col-md-4">
-                      <div class="form-group">
-                          <input type="text" class="form-control" name="search" id="search">
-                      </div>
-                  </div> --}}
                     <div class="col-md-3">
                         <div class="form-group">
-                            <button type="submit" class="btn btn-primary">Filter</button>
+                            <button type="button" class="btn btn-primary" id="filterLocation">Filter</button>
                         </div>
                     </div>
                 </div>
-              </form>
-                <div id="map"></div>
+              <div id="mapLocation"></div>
                 <div>
             </div>
         </div>
@@ -200,79 +193,31 @@
     });
 
 </script>
-
 <script>
-    //   getLocation();
-    //   function getLocation(){
-    //       if (navigator.geolocation) {
-    //       navigator.geolocation.getCurrentPosition(showPosition);
-    //      }  
-    //   }
-
-    // function showPosition() {
- 
-
-    let lat = "-7.396149";
-    let long = "109.695122";
-
-    var map = L.map('map').setView([lat, long], 10);
-    L.marker([lat, long]).addTo(map);
-
-    let data = {!!json_encode($data, JSON_NUMERIC_CHECK) !!}
-
-    for (let d of data) {
-        L.marker([d.latitude, d.longitude]).addTo(map).bindPopup(
-            `<div>
-            <img height="150px" src = "storage/${d.foto}">
-            <table>
-              <tr>
-                <th>Lokasi </th>
-                <td>:${d.nama_lokasi}</td>
-              </tr>
-              <tr>
-                <th>Jalan </th>
-                <td>:${d.jalan}</td>
-              </tr>
-              <tr>
-                <th>Juru parkir</th>
-                <td>:${d.juru_parkir}</td>
-              </tr>
-              <tr>
-                <th>Desa </th>
-                <td>:${d.nama_desa}</td>
-              </tr>
-              <tr>
-                <th>Kecamatan</th>
-                <td>:${d.nama_kecamatan}</td>
-              </tr>
-            </table>
-          </div>`
-        )
+    function getLocationMain(){
+        $('#mapLocation').html('')
+        // map.remove()
+        let kecamatan = $('#kecamatan').val()
+            let desa = $('#desa').val()
+            $.ajax({
+                headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                type: 'POST',
+                url: '/getlocationdashboard',
+                data: {kecamatan, desa},
+                success: function(hasil){
+                    $('#mapLocation').html(hasil)
+                }
+                
+            })
     }
-    
-
-
-
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-
-        attribution: '© OpenStreetMap'
-    }).addTo(map);
-    var baseLayers = {
-    "Mapbox": mapbox,
-    "OpenStreetMap": osm
-};
-
-var overlays = {
-    "Marker": marker,
-    "Roads": roadsLayer
-};
-
-L.control.layers(baseLayers, overlays).addTo(map);
-
-
-
-    // }
-
+    $(document).ready(function(){
+        $('#filterLocation').click(function(){
+            getLocationMain()
+        })
+        getLocationMain()
+    })
 </script>
 
 @endpush

@@ -13,7 +13,7 @@
 <!--select2-->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css">
 @endsection
-@section('title','Tambah Desa')
+@section('title','Tambah Lokasi')
 @section('content')
 
 <div class="main-content" style="min-height: 531px;">
@@ -130,9 +130,10 @@
                                 </div>
                                    <div class="form-group">
                                     <label>Foto</label>
+                                    <img class="img-preview img-fluid">
                                     <input type="file"
                                         class="form-control mb-3 @error('photo') is-invalid @enderror"
-                                        name="photo" value="{{ old('photo') }}">
+                                        name="photo" id="photo" value="{{ old('photo') }}" onchange="previewImage()">
                                     @error('photo')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -201,6 +202,22 @@
         });
 
     });
+
+    function previewImage(){
+        const photo = document.querySelector('#photo');
+        const imgPreview = document.querySelector('.img-preview');
+
+        imgPreview.style.display = 'block';
+
+        const oFReader = new FileReader();
+        oFReader.readAsDataURL(photo.files[0]);
+
+        oFReader.onload = function(oFREvent){
+            imgPreview.src = oFREvent.target.result
+        }
+    }
+    
+
 
 </script>
 

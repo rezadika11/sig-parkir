@@ -24,14 +24,7 @@
                 <div class="author-box-details">
                    <form action="{{ route('admin.posteditprofil') }}" method="POST">
                     @csrf
-                    <div class="col-md col-sm-3 col-lg-3 mb-4 mb-md-0 mx-auto">
-                        <div class="avatar-item">
-                          <img alt="image" src="../assets/img/avatar/avatar-1.png" class="img-fluid">
-                        </div>
-                        </div>
-                        <div class="form-group col-md col-sm-3 col-lg-7  mx-auto">
-                            <input type="file" class="form-control-file">
-                          </div>
+                    
                     <div class="mt-3">
                         <label for="name">Name</label>
                         <input type="text" name="name" class="form-control @error('name') is-invalid @enderror" value="{{ old('name',$data->name) }}">

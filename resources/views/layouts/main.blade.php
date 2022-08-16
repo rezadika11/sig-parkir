@@ -3,6 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
+  <link rel="icon" href="/assets/img/logo-kab.png" type="icon">
   <title> @yield('title') &mdash; Sistem Informasi Geografis Parkir</title>
 
  @yield('css')
@@ -14,7 +16,7 @@
 </head>
  <style>
  #map {
-    height:500px;
+    min-height:500px;
 }
  </style>
 <body>

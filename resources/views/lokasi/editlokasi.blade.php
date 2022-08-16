@@ -13,7 +13,7 @@
 <!--select2-->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css">
 @endsection
-@section('title','Edit Desa')
+@section('title','Edit Lokasi')
 @section('content')
 
 <div class="main-content" style="min-height: 531px;">
@@ -40,10 +40,11 @@
                         </button>
                     </div>
                     @endif
-                    <form action="{{ route('lokasi.updatelokasi') }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('lokasi.updatelokasi', $data->id_lokasi) }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="row">
                             <div class="col-md-6">
+                                <input type="hidden" name="oldImage" value="{{ $data->foto }}">
                                 <div class="form-group">
                                     <label>Nama Lokasi</label>
                                     <input type="text"
@@ -132,8 +133,14 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Foto</label>
+                                    @if ($data->foto)
+                                    <img src="{{ url('storage/' .$data->foto) }}" alt="foto" class="img-preview img-fluid d-block mb-2" style="height: 25vh">
+                                    @else
+                                        <img class="img-preview img-fluid mb-2" style="height: 25vh">
+                                    @endif
+                                    
                                     <input type="file" class="form-control mb-3 @error('photo') is-invalid @enderror"
-                                        name="photo" value="{{ old('photo', $data->foto) }}">
+                                        name="photo" id="photo" onchange="previewImage()">
                                     @error('photo')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -141,7 +148,7 @@
                                     @enderror
                                 </div>
                                 <button type="submit" class="btn btn-primary float-right"><i class="fas fa-save"></i>
-                                    Tambah</button>
+                                    Simpan</button>
                             </div>
                         </div>
                     </form>
@@ -177,6 +184,7 @@
 <script>
     $(document).ready(function () {
         $('.select').select2();
+        
     });
 
 </script>
@@ -186,7 +194,7 @@
             var kecId = $(this).val();
             if (kecId) {
                 $.ajax({
-                    url: 'getdesa/ajax/' + kecId,
+                    url: '/getajaxdesa/' + kecId,
                     type: "GET",
                     dataType: "json",
                     success: function (data) {
@@ -196,14 +204,29 @@
                                 '<option value="' +
                                 key + '">' + value + '</option>');
                         });
+                        $('select[name="desa"]').val({{ $data->id_desa }}).trigger('change')
                     }
                 });
             } else {
                 $('select[name="desa"]').empty();
             }
         });
-
+        $('select[name="kecamatan"]').val({{ $data->id_kecamatan }}).trigger('change')
     });
+
+    function previewImage(){
+        const photo = document.querySelector('#photo');
+        const imgPreview = document.querySelector('.img-preview');
+
+        imgPreview.style.display = 'block';
+
+        const oFReader = new FileReader();
+        oFReader.readAsDataURL(photo.files[0]);
+
+        oFReader.onload = function(oFREvent){
+            imgPreview.src = oFREvent.target.result
+        }
+    }
 
 </script>
 
