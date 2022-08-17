@@ -19,7 +19,7 @@
 	<section class="section">
 	  <div class="section-header">
 		<h1>@yield('title')</h1>
-			<a href="{{ route('kecamatan.tambahkecamatan') }}" class="btn btn-sm btn-primary ml-2"><i class="fas fa-plus-circle"></i> Tambah Desa</a>
+			<a href="{{ route('kecamatan.tambahkecamatan') }}" class="btn btn-sm btn-primary ml-2"><i class="fas fa-plus-circle"></i> Tambah Kecamatan</a>
 	  </div>
 			<div class="section-body">
 				<div class="card">

@@ -10,11 +10,9 @@
         }
 
         function showPosition(position) {
-            // let lat = position.coords.latitude//"-7.396149";
-            // let long = position.coords.longitude//"109.695122";
+            let lat = position.coords.latitude//"-7.396149";
+            let long = position.coords.longitude//"109.695122";
 
-            let lat = "-7.396149";
-            let long = "109.695122";
 
             let data = {!!json_encode($data, JSON_NUMERIC_CHECK) !!}
             if(data.length > 0){
