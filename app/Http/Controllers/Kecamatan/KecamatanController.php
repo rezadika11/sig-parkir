@@ -12,21 +12,24 @@ class KecamatanController extends Controller
     {
         $this->middleware('IsLogin');
     }
-    public function KecamatanView(){
+    public function KecamatanView()
+    {
         $data = DB::table('kecamatan')
-            ->select('id_kecamatan','nama_kecamatan')
-            ->orderBy('nama_kecamatan','asc')
+            ->select('id_kecamatan', 'nama_kecamatan')
+            ->orderBy('nama_kecamatan', 'asc')
             ->get();
 
         return view('kecamatan.index', compact('data'));
     }
 
-    public function TambahKecamatan(){
+    public function TambahKecamatan()
+    {
 
         return view('kecamatan.tambahkecamatan');
     }
 
-    public function SimpanKecamatan(Request $request){
+    public function SimpanKecamatan(Request $request)
+    {
         $request->validate([
             'nama_kecamatan' => 'required|unique:kecamatan'
         ]);
@@ -39,17 +42,18 @@ class KecamatanController extends Controller
                 ]);
             DB::commit();
             return redirect(route('kecamatan.kecamatanview'))
-            ->with('suksesTambah','Data desa berhasil ditambahkan');
+                ->with('suksesTambah', 'Data desa berhasil ditambahkan');
         } catch (\Exception $e) {
             DB::rollBack();
             report($e);
             return redirect(url()->previous())
                 ->withInput()
-                ->with('gagalTambah','Terjadi Kesalahan');
+                ->with('gagalTambah', 'Terjadi Kesalahan');
         }
     }
 
-    public function EditKecamatan($id_kecamatan){
+    public function EditKecamatan($id_kecamatan)
+    {
         $data = DB::table('kecamatan')
             ->select('kecamatan.*')
             ->where('id_kecamatan', $id_kecamatan)
@@ -58,7 +62,8 @@ class KecamatanController extends Controller
         return view('kecamatan.editkecamatan', compact('data'));
     }
 
-    public function UpdateKecamatan(Request $request, $id_kecamatan){
+    public function UpdateKecamatan(Request $request, $id_kecamatan)
+    {
         $request->validate([
             'nama_kecamatan' => 'required|unique:kecamatan'
         ]);
@@ -78,26 +83,31 @@ class KecamatanController extends Controller
             report($e);
             return redirect(url()->previous())
                 ->withInput()
-                ->with('gagalTambah','Terjadi Kesalahan');
+                ->with('gagalTambah', 'Terjadi Kesalahan');
         }
     }
 
-    public function HapusKecamatan($id_kecamatan){
+    public function HapusKecamatan($id_kecamatan)
+    {
 
-            DB::BeginTransaction();
-            try {
-                DB::table('kecamatan')
-                    ->where('id_kecamatan', $id_kecamatan)
-                    ->delete();
-                DB::commit();
-                return redirect(route('kecamatan.kecamatanview'))
-                    ->with('suksesHapus', 'Data kecamatan berhasil di hapus');
-            } catch (\Exception $e) {
-                DB::rollBack();
-                report($e);
-                return redirect(url()->previous())
-                    ->withInput()
-                    ->with('gagalTambah','Terjadi Kesalahan');
-            }
+        DB::BeginTransaction();
+        try {
+            DB::table('kecamatan')
+                ->where('id_kecamatan', $id_kecamatan)
+                ->delete();
+
+            DB::table('desa')
+                ->where('id_kecamatan', $id_kecamatan)
+                ->delete();
+            DB::commit();
+            return redirect(route('kecamatan.kecamatanview'))
+                ->with('suksesHapus', 'Data kecamatan berhasil di hapus');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            report($e);
+            return redirect(url()->previous())
+                ->withInput()
+                ->with('gagalTambah', 'Terjadi Kesalahan');
+        }
     }
 }
