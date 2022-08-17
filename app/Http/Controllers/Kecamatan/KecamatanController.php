@@ -99,6 +99,10 @@ class KecamatanController extends Controller
             DB::table('desa')
                 ->where('id_kecamatan', $id_kecamatan)
                 ->delete();
+
+            DB::table('lokasi')
+                ->where('id_kecamatan', $id_kecamatan)
+                ->delete();
             DB::commit();
             return redirect(route('kecamatan.kecamatanview'))
                 ->with('suksesHapus', 'Data kecamatan berhasil di hapus');
