@@ -64,7 +64,7 @@
     <header>
         <nav id="navbar-example2" class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
             <img src="assets/img/logo-kab.png" width="30" height="30" alt="">
-            <a class="navbar-brand" href="#"> Sistem Pemetaan</a>
+            <a class="navbar-brand" href="#"> <span class="ml-2"> Sistem Pemetaan</span></a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
                 aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -74,7 +74,7 @@
                     <li class="nav-item active">
                         <a class="nav-link" href="#">Beranda <span class="sr-only">(current)</span></a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item active">
                         <a class="nav-link" href="#tentang">Tentang</a>
                     </li>
                 </ul>
