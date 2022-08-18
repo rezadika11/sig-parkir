@@ -4,7 +4,7 @@
         <a href="{{ route('dashboard') }}">PEMETAAN PARKIR</a>
       </div>
       <div class="sidebar-brand sidebar-brand-sm">
-        <a href="index.html">SIG</a>
+        <a href="{{ route('dashboard') }}">SIG</a>
       </div>
       <ul class="sidebar-menu">
           <li class="menu-header">Pages</li>
