@@ -8,7 +8,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>SIG Parkir</title>
 
-    <link rel="icon" href="/assets/img/logo-kab.png">
+    {{-- <link rel="icon" href="/assets/img/logo-kab.png"> --}}
 
     <!-- General CSS Files -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
