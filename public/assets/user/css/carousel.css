@@ -74,6 +74,15 @@ body {
 .container .btn{
   box-shadow: 2px 3px #b8b8b8;
 }
+.tentang{
+ 
+  /* box-shadow: 0px -2px 3px #b8b8b8; */
+  background-color:  rgb(245, 255, 255);
+}
+.tentang h4{
+  font-size: 150%;
+  font-weight: bolder;
+}
 
 
 /* RESPONSIVE CSS
