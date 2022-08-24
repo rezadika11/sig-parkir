@@ -31,7 +31,7 @@ class DashboardUserController extends Controller
 
         return json_encode($desa);
     }
- 
+
     public function getLocation(Request $request)
     {
         $data  = DB::table('lokasi')

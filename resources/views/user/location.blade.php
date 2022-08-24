@@ -16,7 +16,8 @@
 
             let data = {!!json_encode($data, JSON_NUMERIC_CHECK) !!}
             if(data.length > 0){
-                var map = L.map('map').setView([data[0].latitude, data[0].longitude], 10);
+                
+              var map = L.map('map').setView([data[0].latitude, data[0].longitude], 10);
                 for (let d of data) {
                 L.marker([d.latitude, d.longitude]).addTo(map).bindPopup(
           `<div>
@@ -52,10 +53,12 @@
             }
            
 
+            googleStreets = L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}',{
+               maxZoom: 20,
+               subdomains:['mt0','mt1','mt2','mt3']
+            });
 
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: '© OpenStreetMap'
-            }).addTo(map);
+            googleStreets.addTo(map);
 
         }
 </script>

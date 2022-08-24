@@ -7,6 +7,7 @@ use App\Http\Controllers\DashboardUserController;
 use App\Http\Controllers\Desa\DesaController;
 use App\Http\Controllers\Kecamatan\KecamatanController;
 use App\Http\Controllers\Lokasi\LokasiController;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -66,4 +67,8 @@ Route::controller(KecamatanController::class)->prefix('kecamatan')->name('kecama
     Route::get('/editkecamatan/{id_kecamatan}', 'EditKecamatan')->name('editkecamatan');
     Route::post('/updatekecamatan/{id_kecamatan}', 'UpdateKecamatan')->name('updatekecamatan');
     Route::post('/hapuskecamatan/{id_kecamatan}', 'HapusKecamatan')->name('hapuskecamatan');
+});
+
+Route::get('/foo', function () {
+    Artisan::call('storage:link');
 });
