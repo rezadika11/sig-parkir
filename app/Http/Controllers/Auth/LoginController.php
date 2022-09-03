@@ -27,7 +27,7 @@ class LoginController extends Controller
             session(['berhasil_login' => true]); 
             return redirect()->intended(route('dashboard'));
         }
-
+        
         return back()->with('loginError','Login gagal');
     }
 

@@ -63,7 +63,6 @@
 						<table id="data-tables" class="table" style="width:100%">
 							<thead class="thead-dark" style="background-color: #D6EFED">
 								<tr>
-								<tr>
 									<th>No.</th>
 									<th>Gambar</th>
 									<th>Jalan</th>

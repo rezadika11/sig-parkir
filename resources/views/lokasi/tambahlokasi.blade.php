@@ -135,7 +135,7 @@
                                         class="form-control mb-3 @error('photo') is-invalid @enderror"
                                         name="photo" id="photo" value="{{ old('photo') }}" onchange="previewImage()">
                                     @error('photo')
-                                    <div class="invalid-feedback">
+                                    <div class="invalid-feedback">  
                                         {{ $message }}
                                     </div>
                                     @enderror

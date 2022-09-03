@@ -131,7 +131,7 @@
                                     </div>
                                     @enderror
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group"> 
                                     <label>Foto</label>
                                     @if ($data->foto)
                                     <img src="{{ url('storage/' .$data->foto) }}" alt="foto" class="img-preview img-fluid d-block mb-2" style="height: 25vh">

@@ -38,7 +38,7 @@ Route::controller(AdminController::class)->prefix('admin')->name('admin.')->grou
     Route::get('/editprofile', 'EditProfil')->name('editprofil');
     Route::post('/posteditprofil', 'PostEditProfil')->name('posteditprofil');
 });
-
+    
 Route::controller(LokasiController::class)->prefix('lokasi')->name('lokasi.')->group(function () {
     Route::get('/lokasi', 'LokasiView')->name('lokasiview');
     Route::get('/tambahlokasi', 'TambahLokasi')->name('tambahlokasi');
