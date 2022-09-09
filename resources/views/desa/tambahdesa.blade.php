@@ -44,13 +44,13 @@
                         @csrf
                     <div class="form-group col-md-6">
                         <label>Desa</label>
-                        <input type="text" class="form-control mb-3 @error('nama_desa') is-invalid @enderror" name="nama_desa" value="{{ old('nama_desa') }}">
+                        <input type="text" class="form-control @error('nama_desa') is-invalid @enderror" name="nama_desa" value="{{ old('nama_desa') }}">
                         @error('nama_desa')
                             <div class="invalid-feedback">
                                 {{ $message }}
                             </div>
                         @enderror
-                        <div class="form-group">
+                        <div class="form-group mt-3">
                             <select class="form-control select2 {{ session()->has('id_kecamatan') ? 'is-invalid' : '' }}" name="id_kecamatan">
                                 <option selected disabled>- Kecamatan -</option>
                                 @foreach ($kecamatan as $kec)

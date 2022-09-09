@@ -34,8 +34,8 @@ class DesaController extends Controller
     public function SimpanDesa(Request $request)
     {
         $validasidesa = $request->validate([
-            'nama_desa' => 'required',
-            'id_kecamatan' => 'required'
+            'nama_desa' => 'required|unique:desa',
+            'id_kecamatan' => 'required|unique:desa'
         ]);
 
         DB::BeginTransaction();
@@ -76,8 +76,8 @@ class DesaController extends Controller
     public function UpdateDesa(Request $request, $id_desa)
     {
         $request->validate([
-            'nama_desa' => 'required',
-            'id_kecamatan' => 'required'
+            'nama_desa' => 'required|unique:desa',
+            'id_kecamatan' => 'required|unique:kecamatan'
         ]);
 
 

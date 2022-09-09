@@ -49,10 +49,7 @@
             }else{
                 var map = L.map('map').setView([lat,long], 10);
                 // L.marker([lat, long]).addTo(map);
-            }
-           
-
-
+            }                                                                                                                                                                                                                                       
             // L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             //     attribution: '© OpenStreetMap'
             // }).addTo(map);

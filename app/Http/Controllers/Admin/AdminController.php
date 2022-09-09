@@ -14,17 +14,20 @@ class AdminController extends Controller
     {
         $this->middleware('IsLogin');
     }
-    
-    public function Profil(){
+
+    public function Profil()
+    {
         return view('admin.profil');
     }
 
-    public function EditProfil(){
+    public function EditProfil()
+    {
 
         $data = User::findOrFail(1)->first();
         return view('admin.editprofil', compact('data'));
     }
-    public function PostEditProfil(Request $request){
+    public function PostEditProfil(Request $request)
+    {
 
         $validasi = $request->validate([
             'name' => 'required',
@@ -32,16 +35,13 @@ class AdminController extends Controller
 
         ]);
 
-        $data = DB::table('users')
-                    ->where('id',1)
-                    ->update([
-                        'name' => $request->name,
-                        'username' => $request->username,
-                        'password' => Hash::make($request->password)
-                    ]);
+        User::where('id', 1)
+            ->update([
+                'name' => $request->name,
+                'username' => $request->username,
+                'password' => Hash::make($request->password)
+            ]);
 
-        return redirect(route('admin.profil'))->with('suksesEdit','Data Berhasil Di Edit');
-
-
+        return redirect(route('admin.profil'))->with('suksesEdit', 'Data Berhasil Di Edit');
     }
 }

@@ -41,13 +41,14 @@
                         @csrf
                     <div class="form-group col-md-6">
                         <label>Kecamatan</label>
-                        <input type="text" class="form-control mb-3 @error('nama_kecamatan') is-invalid @enderror" name="nama_kecamatan" value="{{ old('nama_kecamatan', $data->nama_kecamatan) }}">
+                        <input type="text" class="form-control  @error('nama_kecamatan') is-invalid @enderror" name="nama_kecamatan" value="{{ old('nama_kecamatan', $data->nama_kecamatan) }}">
                         @error('nama_kecamatan')
                             <div class="invalid-feedback">
                                 {{ $message }}
                             </div>
                         @enderror
-                        <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Simpan</button>
+                        <button type="submit" class="btn btn-primary mt-3"><i class="fas fa-save"></i> Simpan</button>
+                        <a href="{{ route('kecamatan.kecamatanview') }}" class="btn btn-warning mt-3"><i class="fas fa-arrow-alt-circle-left"></i> Kembali</a>
                     </div>
                 </form>
                 </div>
