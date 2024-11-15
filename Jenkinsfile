@@ -8,34 +8,10 @@ pipeline {
     stages {
         stage('Clone Repository') {
             steps {
-                git 'https://github.com/rezadika11/sig-parkir' 
-            }
-        }        
-        stage('Build Docker Image') {
-            steps {
-                script {
-                    docker.build("${DOCKER_IMAGE}", ".").inside {
-                        sh 'composer install --no-interaction --prefer-dist'
-                    }
-                }
+                git 'https://github.com/rezadika11/sig-parkir'
             }
         }
-        
-        stage('Run Tests') {
-            steps {
-                script {pipeline {
-    agent any
 
-    environment {
-        DOCKER_IMAGE = 'laravel-sig-app'
-    }
-
-    stages {
-        stage('Clone Repository') {
-            steps {
-                git 'https://github.com/rezadika11/sig-parkir' 
-            }
-        }        
         stage('Build Docker Image') {
             steps {
                 script {
@@ -43,47 +19,11 @@ pipeline {
                 }
             }
         }
-        
-        
-        stage('Deploy to Production') {
-            steps {
-                echo 'Deploying to production...'
-                script {
-                    sh '''
-                        docker-compose -f docker-compose.prod.yml up -d
-                    '''
-                }
-            }
-        }
     }
 
     post {
         always {
-            cleanWs()
-        }
-    }
-}
-
-                    
-                    docker.image("${DOCKER_IMAGE}").inside {
-                        sh 'cd /var/www && vendor/bin/phpunit'
-                    }
-                }
-            }
-        }
-        
-        stage('Deploy to Production') {
-            steps {
-                
-                echo 'Deploying to production...'
-            }
-        }
-    }
-
-    post {
-        always {
-            
-            cleanWs()
+            cleanWs() // Clean up workspace
         }
     }
 }
