@@ -13,8 +13,10 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install gd pdo pdo_mysql bcmath intl
 
-# Install Composer
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+# Copy and install Composer dependencies
+COPY composer.json composer.lock ./
+RUN composer install --no-dev --no-scripts --no-progress --prefer-dist
+
 
 # Set Composer cache
 RUN mkdir -p /root/.composer/cache
@@ -29,7 +31,7 @@ COPY . .
 RUN chown -R www-data:www-data storage bootstrap/cache
 
 # Expose port
-EXPOSE 9000
+EXPOSE 3000
 
 # Start PHP-FPM
 CMD ["php-fpm"]

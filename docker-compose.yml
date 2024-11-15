@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  laravel:
+    image: laravel-sig-app1
+    container_name: laravel-sig-app-cont
+    volumes:
+      - .:/var/www
+      - ./storage:/var/www/storage
+    ports:
+      - "3000:9000"
+    environment:
+      - APP_ENV=local
+      - APP_DEBUG=true
+      - APP_KEY=base64:your_generated_app_key
+    depends_on:
+      - db
+
+  db:
+    image: mysql:8.0
+    container_name: mysql-db
+    restart: always
+    environment:
+      MYSQL_DATABASE: laravel
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - mysql_data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+
+volumes:
+  mysql_data:
