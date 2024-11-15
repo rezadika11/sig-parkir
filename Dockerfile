@@ -10,11 +10,15 @@ RUN apt-get update && apt-get install -y \
     unzip \
     libicu-dev \
     libonig-dev \
+    curl \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install gd pdo pdo_mysql bcmath intl
 
-# Install Composer
+# Install Composer manually
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
+# Verify composer installation
+RUN composer --version
 
 # Set working directory
 WORKDIR /var/www
