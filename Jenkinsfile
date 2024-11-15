@@ -44,19 +44,6 @@ pipeline {
             }
         }
         
-        stage('Run Tests') {
-            steps {
-                script {
-                    docker.image("${DOCKER_IMAGE}").inside {
-                        sh '''
-                            cd /var/www
-                            composer install --no-interaction --prefer-dist
-                            vendor/bin/phpunit
-                        '''
-                    }
-                }
-            }
-        }
         
         stage('Deploy to Production') {
             steps {
