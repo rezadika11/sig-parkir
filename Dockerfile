@@ -31,7 +31,7 @@ COPY . .
 RUN chown -R www-data:www-data storage bootstrap/cache
 
 # Expose port
-EXPOSE 3000
+EXPOSE 6000
 
 # Start PHP-FPM
 CMD ["php-fpm"]
