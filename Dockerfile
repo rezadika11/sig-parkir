@@ -13,25 +13,23 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install gd pdo pdo_mysql bcmath intl
 
-# Copy and install Composer dependencies
-COPY composer.json composer.lock ./
-RUN composer install --no-dev --no-scripts --no-progress --prefer-dist
-
-
-# Set Composer cache
-RUN mkdir -p /root/.composer/cache
+# Install Composer
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 # Set working directory
 WORKDIR /var/www
 
-# Copy Laravel application
+# Copy only Composer files for dependency installation
+COPY composer.json composer.lock ./
+
+# Install dependencies
+RUN composer install --no-dev --no-scripts --no-progress --prefer-dist
+
+# Copy the entire application
 COPY . .
 
-# Set permissions
-RUN chown -R www-data:www-data storage bootstrap/cache
+# Set permissions for Laravel
+RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache
 
-# Expose port
-EXPOSE 6000
-
-# Start PHP-FPM
+EXPOSE 9000
 CMD ["php-fpm"]

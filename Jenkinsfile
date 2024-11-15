@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_IMAGE = 'my-laravel-app'
+        DOCKER_IMAGE = 'laravel-sig-app'
     }
 
     stages {
@@ -27,7 +27,7 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_IMAGE = '-laravel-sig-app'
+        DOCKER_IMAGE = 'laravel-sig-app'
     }
 
     stages {
