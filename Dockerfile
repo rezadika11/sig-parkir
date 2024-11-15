@@ -29,7 +29,7 @@ COPY . .
 RUN chown -R www-data:www-data storage bootstrap/cache
 
 # Expose port
-EXPOSE 9001
+EXPOSE 9000
 
 # Start PHP-FPM
 CMD ["php-fpm"]
